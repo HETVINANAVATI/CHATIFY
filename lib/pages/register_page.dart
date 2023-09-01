@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../services/database_Service.dart';
 import '../services/media_service.dart';
 import '../services/cloud_storage_service.dart';
+import '../services/navigation_services.dart';
 import '../Widgets/custom_input_fields.dart';
 import '../Widgets/rounded_button.dart';
 import '../Widgets/rounded_image.dart';
@@ -18,11 +19,19 @@ class RegisterPage extends StatefulWidget{
 class _RegisterPageState extends State<RegisterPage>{
   late double _deviceWidth;
   late double _deviceHeight;
+  late AuthenticationProvider _auth;
+  late DatabaseServices _db;
+  late CloudStorageService _cloudStorageService;
+  late NavigationService _navigation;
   PlatformFile? _profileImage;
   String? _name,_email,_password;
    final _registerFormKey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    _auth=Provider.of<AuthenticationProvider>(context);
+    _db=GetIt.instance.get<DatabaseServices>();
+    _cloudStorageService=GetIt.instance.get<CloudStorageService>();
+    _navigation=GetIt.instance.get<NavigationService>();
     _deviceHeight=MediaQuery.of(context).size.height;
     _deviceWidth=MediaQuery.of(context).size.width;
      return _buildUi();
@@ -108,6 +117,16 @@ class _RegisterPageState extends State<RegisterPage>{
   }
   Widget _registerButton()
   {
-    return RoundedButton(name: "Register", height: _deviceHeight*0.078, width: _deviceWidth*0.65, onPressed: ()async{},);
+    return RoundedButton(name: "Register", height: _deviceHeight*0.078, width: _deviceWidth*0.65, onPressed: ()async{
+      if(_registerFormKey.currentState!.validate()&&_profileImage!=null)
+        {
+           _registerFormKey.currentState!.save();
+           String? _uid=await _auth.registerUserUsingEmailAndPasswords(_email!, _password!);
+           String? _imageUrl=await _cloudStorageService.saveUserImageToStorage(_uid!, _profileImage!);
+           await _db.createUser(_uid, _email!, _name!, _imageUrl!);
+           await _auth.logout();
+           _navigation.goBack();
+        }
+    },);
   }
 }
