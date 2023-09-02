@@ -30,6 +30,7 @@ class _LoginPageState extends State<LoginPage>
        Widget _buildUI()
        {
          return Scaffold(
+             resizeToAvoidBottomInset: false,
            body: Container(padding: EdgeInsets.symmetric(horizontal: _deviceWidth*0.03,vertical: _deviceHeight*0.02),
            height: _deviceHeight*0.98,
            width: _deviceWidth*0.97,
@@ -38,6 +39,9 @@ class _LoginPageState extends State<LoginPage>
              mainAxisAlignment: MainAxisAlignment.center,
              crossAxisAlignment: CrossAxisAlignment.center,
              children: [
+               SizedBox(
+                 height: _deviceHeight*0.05,
+               ),
                _pageTitle(),
                SizedBox(
                  height: _deviceHeight*0.04,
@@ -48,10 +52,12 @@ class _LoginPageState extends State<LoginPage>
                ),
                _loginButton(),
                SizedBox(
-                 height: _deviceHeight*0.03,
+                 height: _deviceHeight*0.05,
                ),
                _registerAccountLink(),
-
+               SizedBox(
+                 height: _deviceHeight*0.02,
+               ),
              ],
            ),),
 
@@ -93,8 +99,8 @@ class _LoginPageState extends State<LoginPage>
        {
           return RoundedButton(
             name: "Login",
-            height: _deviceHeight*0.092,
-            width: _deviceHeight*0.65,
+            height: _deviceHeight*0.078,
+            width: _deviceWidth*0.65,
             onPressed: ()
             {
              if(_loginFormKey.currentState!.validate())
