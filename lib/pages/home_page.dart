@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import '../pages/chats.dart';
+import '../pages/chats_page.dart';
 import '../pages/users.dart';
 class HomePage extends StatefulWidget{
   @override
