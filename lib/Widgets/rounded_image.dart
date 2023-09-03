@@ -36,4 +36,8 @@ class RoundedImageFile extends StatelessWidget{
      borderRadius: BorderRadius.all(Radius.circular(size)),
      color: Colors.black,),);
   }
+
+}
+class RoundedImageNetworkWithStatusIndicator extends RoundedImageNetwork{
+
 }
