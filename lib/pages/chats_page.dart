@@ -6,6 +6,10 @@ import '../providers/chats_page_provider.dart';
 import '../Widgets/top_bar.dart';
 import '../Widgets/custom_list_view_tiles.dart';
 import '../models/chat.dart';
+import '../models/chat_user.dart';
+import '../models/chat_message.dart';
+import '../services/navigation_services.dart';
+import '../pages/chat_page.dart';
 class ChatsPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -17,11 +21,13 @@ class _ChatsPageState extends State<ChatsPage>{
   late double _deviceWidth;
   late AuthenticationProvider _auth;
   late ChatsPageProvider _pageProvider;
+  late NavigationService _navigationService;
  @override
   Widget build(BuildContext context) {
    _deviceHeight = MediaQuery.of(context).size.height;
    _deviceWidth = MediaQuery.of(context).size.width;
    _auth=Provider.of<AuthenticationProvider>(context);
+   _navigationService=GetIt.instance.get<NavigationService>();
     return MultiProvider(providers:
     [
       ChangeNotifierProvider<ChatsPageProvider>(create: (_)=>
@@ -65,7 +71,7 @@ class _ChatsPageState extends State<ChatsPage>{
            if(_chats.length!=0)
              {
                 return ListView.builder(itemCount: _chats.length,itemBuilder: (BuildContext _context ,int _index ){
-                  return _chatTile();
+                  return _chatTile(_chats[_index]);
                 });
              }
            else
@@ -79,16 +85,25 @@ class _ChatsPageState extends State<ChatsPage>{
         }
     })(),);
   }
-  Widget _chatTile()
+  Widget _chatTile(Chat _chat)
   {
+    List<ChatUser> _receipents=_chat.receipents();
+    bool _isActive = _receipents.any((_d) => _d.wasRecentlyActive());
+    String _subtitleText="";
+    if(_chat.messages.isNotEmpty)
+      {
+        _subtitleText=_chat.messages.first.type!=MessageType.TEXT?"Media Attachment":_chat.messages.first.content;
+      }
     return  CustomListViewTitleWithActivity(
         height: _deviceHeight*0.10,
-        title: "Hetvi",
-        subtitle: "Hello",
-        imagePath: "https://i.pravatar.cc/300",
-        isActive: true,
-        isActivity: true,
-        onTap: (){}
+        title: _chat.title(),
+        subtitle: _subtitleText,
+        imagePath: _chat.imageURL(),
+        isActive: _isActive,
+        isActivity: _chat.activity,
+        onTap: (){
+          _navigationService.navigateToPage(ChatPage(chat: _chat),);
+        }
     );
   }
 }
