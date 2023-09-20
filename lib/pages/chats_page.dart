@@ -10,6 +10,7 @@ import '../models/chat_user.dart';
 import '../models/chat_message.dart';
 import '../services/navigation_services.dart';
 import '../pages/chat_page.dart';
+import '../pages/chatBotScreen.dart';
 class ChatsPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -55,6 +56,7 @@ class _ChatsPageState extends State<ChatsPage>{
                 _auth.logout();
               },),
             ),
+
             _chatsList(),
           ],
         ),
@@ -102,8 +104,10 @@ class _ChatsPageState extends State<ChatsPage>{
         isActive: _isActive,
         isActivity: _chat.activity,
         onTap: (){
-          _navigationService.navigateToPage(ChatPage(chat: _chat),);
+          _navigationService.navigateToPage(ChatPage(chat: _chat),
+          );
         }
     );
   }
+
 }
