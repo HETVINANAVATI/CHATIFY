@@ -42,9 +42,10 @@ dependencies:
   flutter_keyboard_visibility: ^5.4.1
   firebase_messaging: ^14.6.5
   firebase_core_platform_interface: ^4.8.0
-
-
-
+  http: ^0.13.5
+  chat_gpt_sdk: ^1.0.2+3
+  velocity_x: ^4.1.1
+  translator: ^0.1.7
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

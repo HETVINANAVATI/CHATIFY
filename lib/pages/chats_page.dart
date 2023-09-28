@@ -1,3 +1,4 @@
+import 'package:chatify/pages/chatBotPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
@@ -10,7 +11,6 @@ import '../models/chat_user.dart';
 import '../models/chat_message.dart';
 import '../services/navigation_services.dart';
 import '../pages/chat_page.dart';
-import '../pages/chatBotScreen.dart';
 class ChatsPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -56,7 +56,7 @@ class _ChatsPageState extends State<ChatsPage>{
                 _auth.logout();
               },),
             ),
-
+            _chatBot(),
             _chatsList(),
           ],
         ),
@@ -109,5 +109,17 @@ class _ChatsPageState extends State<ChatsPage>{
         }
     );
   }
-
+  Widget _chatBot()
+  {
+    return CustomListViewTile(
+        height: _deviceHeight*0.10,
+        title: "Chatify AI",
+        subtitle: "Your AI friend",
+        imagePath: "https://th.bing.com/th/id/OIP.kwJH4fC-iCHuCF2Ar4_vfgHaHa?pid=ImgDet&rs=1",
+        isActive: true,
+        isSelected: false,
+        onTap: (){
+          _navigationService.navigateToPage(ChatBOTScreen(key:GlobalKey()));
+        });
+  }
 }
