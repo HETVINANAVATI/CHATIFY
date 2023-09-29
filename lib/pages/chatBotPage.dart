@@ -4,26 +4,28 @@ import 'package:velocity_x/velocity_x.dart';
 import '../Widgets/chatBotmessage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import '../Widgets/top_bar.dart';
 class ChatBOTScreen extends StatefulWidget {
   const ChatBOTScreen({
-    Key ? key
+    Key ? key,
   }): super(key: key);
   @override
   State < ChatBOTScreen > createState() => _ChatBOTScreenState();
 }
 class _ChatBOTScreenState extends State < ChatBOTScreen > {
+  late double _deviceHeight;
+  late double _deviceWidth;
   final TextEditingController _controller = TextEditingController();
   final List < ChatMessage > _message = [];
-  String apiKey = "api-key";
+  String apiKey = "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";
   Future < void > _sendMessage() async {
-    ChatMessage message = ChatMessage(text: _controller.text, sender: "user");
+    ChatMessage message = ChatMessage(text: _controller.text, sender: "user",size: _deviceHeight*0.05,);
     setState(() {
       _message.insert(0, message);
     });
     _controller.clear();
     final response = await generateText(message.text);
-    ChatMessage botMessage = ChatMessage(text: response.toString(), sender: "Chatify AI");
+    ChatMessage botMessage = ChatMessage(size:_deviceHeight*0.05,text: response.toString(), sender: "Chatify AI");
     setState(() {
       _message.insert(0, botMessage);
     });
@@ -61,9 +63,12 @@ class _ChatBOTScreenState extends State < ChatBOTScreen > {
   }
   @override
   Widget build(BuildContext context) {
+    _deviceHeight = MediaQuery.of(context).size.height;
+    _deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      // App bar
-      appBar: AppBar(centerTitle: true, title: Text("Chatify AI"), ),
+      appBar: AppBar(centerTitle: true, title: Text("Chatify AI"),iconTheme: IconThemeData(color: Color.fromRGBO(0, 82, 218, 1.0)),
+        backgroundColor: Color.fromRGBO(36, 35, 49, 1.0),
+       ),
       // body
       body: SafeArea(child: Column(children: [
         Flexible(child: ListView.builder(padding: Vx.m8, reverse: true, itemBuilder: (context, index) {

@@ -11,6 +11,7 @@ import '../models/chat_user.dart';
 import '../models/chat_message.dart';
 import '../services/navigation_services.dart';
 import '../pages/chat_page.dart';
+import '../pages/profilePage.dart';
 class ChatsPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -40,6 +41,7 @@ class _ChatsPageState extends State<ChatsPage>{
   {
     return Builder(builder: (BuildContext _context){
       _pageProvider=_context.watch<ChatsPageProvider>();
+
       return Container(
         padding: EdgeInsets.symmetric(horizontal: _deviceWidth*0.03,vertical: _deviceHeight*0.02,),
         height: _deviceHeight*0.98,
@@ -50,10 +52,10 @@ class _ChatsPageState extends State<ChatsPage>{
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TopBar("Chats", primaryAction: IconButton(icon:Icon(
-              Icons.logout,
+              Icons.person,
               color: Color.fromRGBO(0, 82, 218, 1.0),),
               onPressed: (){
-                _auth.logout();
+                _navigationService.navigateToPage(Profilepage());
               },),
             ),
             _chatBot(),

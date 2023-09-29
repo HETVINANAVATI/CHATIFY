@@ -4,6 +4,7 @@ class CustomTextFormField extends StatelessWidget{
   final String regEx;
   final String hintText;
   final bool obscuretext;
+
   CustomTextFormField(
 {
   required this.onSaved,
