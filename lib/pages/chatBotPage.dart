@@ -17,7 +17,7 @@ class _ChatBOTScreenState extends State < ChatBOTScreen > {
   late double _deviceWidth;
   final TextEditingController _controller = TextEditingController();
   final List < ChatMessage > _message = [];
-  String apiKey = "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";
+  String apiKey = "your-key"
   Future < void > _sendMessage() async {
     ChatMessage message = ChatMessage(text: _controller.text, sender: "user",size: _deviceHeight*0.05,);
     setState(() {
